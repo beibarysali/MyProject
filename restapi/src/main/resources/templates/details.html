@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.getTitle()}">Title</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+</head>
+<style>
+    body{
+        background: gray;
+        font-family: 'Roboto', sans-serif;
+    }
+    .container{
+        margin: 0;
+        width: 100%;
+        height: auto;
+        display: flex;
+    }
+    .portfolio-wrapper{
+        width: 200px;
+        height: 300px;
+        margin: 10px;
+    }
+    .movie_thumbnail{
+        float: left;
+    }
+    .plain{
+        text-decoration-line: none;
+    }
+    .label{
+        position: absolute;
+        margin-left: 250px;
+    }
+    .label-text{
+        font-family: 'Roboto', sans-serif;
+    }
+    form{
+        float: left;
+    }
+    .btn-warning,
+    .second{
+        margin-left: 10px;
+    }
+    /*.btn btn-warning{*/
+    /*    margin-left: 10px;*/
+    /*}*/
+    /* Style the header with a grey background and some padding */
+    .header {
+        overflow: hidden;
+        background-color: #f1f1f1;
+        padding: 20px 10px;
+    }
+
+    /* Style the header links */
+    .header a {
+        float: left;
+        color: black;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        line-height: 25px;
+        border-radius: 4px;
+    }
+
+    /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+    .header a.logo {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    /* Change the background color on mouse-over */
+    .header a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    /* Style the active/current link*/
+    .header a.active {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    /* Float the link section to the right */
+    .header-right {
+        float: right;
+    }
+
+    /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+    @media screen and (max-width: 500px) {
+        .header a {
+            float: none;
+            display: block;
+            text-align: left;
+        }
+        .header-right {
+            float: none;
+        }
+    }
+</style>
+<body>
+<div class="header">
+    <a href="/home" class="logo">ABC Online Ticket</a>
+    <div class="header-right">
+        <a class="active" href="/home">Home</a>
+        <a th:href="@{/create}">Add Movie</a><!--   Должен быть только для админа     -->
+        <a th:href="@{/about}">About</a>
+    </div>
+</div>
+<div id="portfoliolist" class="container">
+    <div class="portfolio-wrapper">
+        <a class="movie_thumbnail" rel="group" title=""  th:href="@{/details/{id}(id=${movie.getId()})}">
+                <img th:src="@{${movie.getImagePath()}}" class="img-thumbnail" alt="">
+        </a>
+        <div class="label">
+            <div class="label-text">
+                <p th:text="'Movie: '+${movie.getTitle()}"></p>
+                <p th:text="'Category: ' + ${movie.getCategory}"></p>
+                <p th:text="'Rate Movie: '+ ${movie.getRateMovie}"></p>
+                <p th:text="'Director: ' +${movie.getDirector}"></p>
+                <p th:text="'Year Release: '+${movie.getYearRelease}"></p>
+                <a class="btn btn-warning" th:href="${movie.imdb}" target="_blank"/>IMDb Profile</a>
+                <form th:action="@{/edit/{id}(id=${movie.getId()})}" th:method="get">
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </form>
+                <form class="second" th:action="@{/delete/{id}(id=${movie.getId()})}" th:method="get">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+                <form class="second" th:action="@{buy/{id}(id=${movie.getId()})}" th:method="get">
+                    <button class="btn btn-success" type="submit">Buy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

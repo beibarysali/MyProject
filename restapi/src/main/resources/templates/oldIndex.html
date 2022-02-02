@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+<body>
+<h1>Movie List</h1>
+
+<table class="table">
+    <thead class="table thead-primary">
+    <tr >
+        <td>ID</td>
+        <th>Title Movie</th>
+        <th>Category</th>
+        <th>Movie rate</th>
+        <th>Director</th>
+        <th>Release year</th>
+        <th>IMDb</th>
+        <th>Options</th>
+    </tr>
+    </thead>
+
+    <tr th:each="movie : ${movieList}">
+        <td th:text="${movie.getId}">
+        <td th:text="${movie.getTitle}">
+        <td th:text="${movie.getCategory}">
+        <td th:text="${movie.getRateMovie}">
+        <td th:text="${movie.getDirector}">
+        <td th:text="${movie.getYearRelease}">
+        <td > <a class="btn btn-warning" th:href="${movie.imdb}" target="_blank"/>IMDb Profile</a>  </td>
+        <td>
+            <form th:action="@{/edit/{id}(id=${movie.getId()})}" th:method="get">
+                <button class="btn btn-dark" type="submit">Update</button>
+            </form>
+            <form th:action="@{/delete/{id}(id=${movie.getId()})}" th:method="get">
+                <button class="btn btn-dark" type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a class="btn btn-primary button-table" th:href="@{/create}">NEW MOVIE</a>
+
+</body>
+</html>
